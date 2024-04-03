@@ -18,7 +18,7 @@ def start():
     print(" Welcome to malware detection system.\n")
     print(" 1. PE scanner")
     print(" 2. URL scanner")
-    print(" 3. Exit\n")
+    print(" 2. Exit\n")
 
     select = int(input("Enter your choice : "))
 
@@ -59,4 +59,3 @@ def start():
         exit()
 
 start()
-
