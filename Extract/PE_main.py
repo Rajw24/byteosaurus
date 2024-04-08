@@ -1,11 +1,4 @@
-'''
-This is the main function of the PE classification of this program
-The library used to extract the features from the PE was pefile and you can find it here,
-https://pypi.org/project/pefile/
-
-In this program we are first extracting the features from the PE and then providing it to the saved machine and using thoses features we are prediciting whether the PE is malicious or not.
-'''
-
+import numpy
 import pefile
 import os
 import array
@@ -13,7 +6,6 @@ import math
 import pickle
 import joblib
 import sys
-import argparse
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -194,9 +186,12 @@ if __name__ == '__main__':
     data = extract_infos(sys.argv[1])
     
     #matching it with the features saved in features.pkl
-    pe_features = list(map(lambda x:data[x], features))
-    print("Features used for classification: ", pe_features)
-    
+    pe_features = numpy.array(list(map(lambda x:data[x], features))).reshape(1, -1)
+
     #prediciting if the PE is malicious or not based on the extracted features
-    res= clf.predict(pe_features)#[0]
-    print ('The file %s is %s' % (os.path.basename(sys.argv[1]),['malicious', 'legitimate'][res]))
+    res= clf.predict(pe_features)
+    
+    if res[0] == 1:
+        print("Beware! it is a malware")
+    else:
+        print("Relax! it is safe to use")
