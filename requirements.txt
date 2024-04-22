@@ -10,3 +10,5 @@ scipy
 six
 threadpoolctl
 tzdata
+streamlit
+streamlit_card
